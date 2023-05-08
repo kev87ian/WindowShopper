@@ -55,7 +55,7 @@ fun MainScreen() {
                     Text(text = "Search...")
                 },
                 leadingIcon = {
-                    Icons.Default.Search
+                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
                 }
             )
         }
