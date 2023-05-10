@@ -9,7 +9,7 @@ data class Product(
     val productImageLink: String,
     @PrimaryKey(autoGenerate = false)
     val productLink: String,
-    val productPrice: Int,
+    val productPrice: String,
     val productRating: Float,
     val totalReviews: Float
 )
