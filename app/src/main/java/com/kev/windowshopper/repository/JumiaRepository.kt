@@ -3,9 +3,9 @@ package com.kev.windowshopper.repository
 import com.kev.windowshopper.model.Product
 import com.kev.windowshopper.util.Constants
 import com.kev.windowshopper.util.NetworkResult
-import org.jsoup.Jsoup
 import java.io.IOException
 import java.net.SocketTimeoutException
+import org.jsoup.Jsoup
 
 class JumiaRepository {
 
@@ -13,7 +13,6 @@ class JumiaRepository {
 
     suspend fun searchProduct(query: String): NetworkResult<List<Product>> {
         return try {
-
             val url = Constants.JUMIA_BASE_URL.plus(query)
             val document = Jsoup.connect(url)
                 .userAgent("Mozilla")
@@ -44,11 +43,17 @@ class JumiaRepository {
                 // Extract ratings count
                 val totalReviews = reviewsCountElement.substringAfter("(").substringBefore(")").trim().toIntOrNull() ?: 0
 
-                val product = Product(title, price, imageUrl, productLink, productRating, totalReviews)
+                val product = Product(
+                    title,
+                    price,
+                    imageUrl,
+                    productLink,
+                    productRating,
+                    totalReviews
+                )
                 productsList.add(product)
             }
             return NetworkResult.Success(productsList)
-
         } catch (e: Exception) {
             e.printStackTrace()
             return NetworkResult.Error(e.localizedMessage ?: "An unknown error occured")
