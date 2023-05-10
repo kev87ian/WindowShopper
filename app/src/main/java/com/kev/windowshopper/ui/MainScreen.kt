@@ -68,7 +68,7 @@ fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreens.Jumia,
         BottomBarScreens.Amazon,
-        BottomBarScreens.WalMart
+        BottomBarScreens.Walmart
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()

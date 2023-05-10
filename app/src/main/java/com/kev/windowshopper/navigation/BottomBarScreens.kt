@@ -21,7 +21,7 @@ sealed class BottomBarScreens(
         icon = Icons.Default.List
     )
 
-    object WalMart: BottomBarScreens(
+    object Walmart: BottomBarScreens(
         title = "Walmart",
         route = "walmart",
         icon = Icons.Default.List

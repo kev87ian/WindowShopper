@@ -19,7 +19,7 @@ fun BottomNavGraph(
             Screen(text = "Amazon")
         }
 
-        composable(route = BottomBarScreens.WalMart.route) {
+        composable(route = BottomBarScreens.Walmart.route) {
             Screen(text = "Walmart")
         }
     }

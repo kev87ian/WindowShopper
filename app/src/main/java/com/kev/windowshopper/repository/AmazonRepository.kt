@@ -8,8 +8,9 @@ import java.net.SocketTimeoutException
 import org.jsoup.Jsoup
 
 class AmazonRepository {
-    val productsList = mutableListOf<Product>()
+
     suspend fun searchProducts(query: String): NetworkResult<List<Product>> {
+        val productsList = mutableListOf<Product>()
         return try {
             val url = Constants.AMAZON_BASE_URL.plus(query)
             val doc = Jsoup.connect(url)
