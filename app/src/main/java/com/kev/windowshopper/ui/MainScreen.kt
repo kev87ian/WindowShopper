@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -28,11 +29,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kev.windowshopper.navigation.BottomBarScreens
 import com.kev.windowshopper.navigation.BottomNavGraph
+import com.kev.windowshopper.screen.amazon.AmazonScreenState
+import com.kev.windowshopper.screen.amazon.AmazonViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
+
     val navController = rememberNavController()
     var query by remember {
         mutableStateOf("")
@@ -42,7 +46,7 @@ fun MainScreen() {
             BottomBar(navController = navController)
         }
     ) {
-        Column (
+        Column(
             modifier = Modifier.fillMaxWidth()
         ) {
             OutlinedTextField(
