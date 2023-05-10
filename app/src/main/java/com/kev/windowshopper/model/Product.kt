@@ -11,5 +11,5 @@ data class Product(
     val productLink: String,
     val productPrice: String,
     val productRating: Float,
-    val totalReviews: Float
+    val totalReviews: Int
 )
