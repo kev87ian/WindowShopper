@@ -15,6 +15,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,13 +30,21 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kev.windowshopper.navigation.BottomBarScreens
 import com.kev.windowshopper.navigation.BottomNavGraph
-import com.kev.windowshopper.screen.amazon.AmazonScreenState
 import com.kev.windowshopper.screen.amazon.AmazonViewModel
+import com.kev.windowshopper.util.ScreenState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
+/*    val x: AmazonViewModel = hiltViewModel()
+    val list = x.productList.collectAsState()
+
+    when (list.value) {
+        is ScreenState.Loading -> {}
+        is ScreenState.Error -> {}
+        is ScreenState.Success -> {}
+    }*/
 
     val navController = rememberNavController()
     var query by remember {
