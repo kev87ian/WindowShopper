@@ -6,16 +6,12 @@ import com.kev.windowshopper.domain.repository.AmazonRepository
 import com.kev.windowshopper.util.NetworkResult
 import com.kev.windowshopper.util.ScreenState
 import io.mockk.coEvery
-import io.mockk.junit4.MockKRule
 import io.mockk.mockk
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import org.junit.internal.runners.JUnit4ClassRunner
-import org.junit.runner.RunWith
 
-@RunWith(MockKRule)
 class AmazonViewModelTest {
     private val repository: AmazonRepository = mockk()
     private var amazonViewModel: AmazonViewModel = mockk()
@@ -52,7 +48,7 @@ class AmazonViewModelTest {
         // Act
         amazonViewModel.searchProduct("query")
 
-        // the delay allows the stateflow to update before we check it's value
+        /*         the delay allows the stateflow to update before we check its value*/
         delay(300)
 
         // Assert
@@ -60,5 +56,4 @@ class AmazonViewModelTest {
         val expectedState = ScreenState.Success(mockProductsList)
         Truth.assertThat(actualState).isEqualTo(expectedState)
     }
-
 }

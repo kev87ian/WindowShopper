@@ -75,7 +75,7 @@ class WatchListDatabaseTest {
 
     @Test
     fun addProductToWatchListTest() = runTest {
-        val product = Product("Xiaomi", "imageUrl", "productLink", 2000, 3.5f, 23.0f)
+        val product = Product("Xiaomi", "imageUrl", "productLink", "2000", 3.5f, 23)
         dao.addProductToWatchList(product)
         val allProducts = dao.getAllProducts().getOrAwaitValue()
         Truth.assertThat(allProducts).contains(product)
@@ -83,7 +83,7 @@ class WatchListDatabaseTest {
 
     @Test
     fun deleteProductFromWatchList() = runTest {
-        val product = Product("Xiaomi", "imageUrl", "productLink", 2000, 3.5f, 23.0f)
+        val product = Product("Xiaomi", "imageUrl", "productLink", "2000", 3.5f, 23)
         dao.addProductToWatchList(product)
         dao.deleteProduct(product)
         val allProducts = dao.getAllProducts().getOrAwaitValue()

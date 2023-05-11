@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.data.repository.JumiaRepositoryImpl
+import com.kev.windowshopper.domain.repository.JumiaRepository
 import com.kev.windowshopper.util.NetworkResult
 import com.kev.windowshopper.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class JumiaViewModel @Inject constructor(
-    private val repository: JumiaRepositoryImpl
+    private val repository: JumiaRepository
 ) : ViewModel() {
 
     private val _productsStateFlow = MutableStateFlow<ScreenState>(ScreenState.Loading)
