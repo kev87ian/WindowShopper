@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.kev.windowshopper.ui.MainScreen
-import com.kev.windowshopper.ui.theme.WindowShopperTheme
+import com.kev.windowshopper.presentation.ui.MainScreen
+import com.kev.windowshopper.presentation.ui.theme.WindowShopperTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

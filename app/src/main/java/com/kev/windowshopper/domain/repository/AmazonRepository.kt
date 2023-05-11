@@ -1,13 +1,20 @@
-package com.kev.windowshopper.repository
+package com.kev.windowshopper.domain.repository
 
-import com.kev.windowshopper.model.Product
+import com.kev.windowshopper.domain.db.WatchListDao
+import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.util.Constants
 import com.kev.windowshopper.util.NetworkResult
 import java.io.IOException
 import java.net.SocketTimeoutException
 import org.jsoup.Jsoup
+import javax.inject.Inject
 
-class AmazonRepository {
+class AmazonRepository @Inject constructor(
+    private val dao: WatchListDao
+) {
+
+
+    suspend fun addProductToWatchList(product: Product) = dao.addProductToWatchList(product)
 
     suspend fun searchProducts(query: String): NetworkResult<List<Product>> {
         val productsList = mutableListOf<Product>()
@@ -18,21 +25,25 @@ class AmazonRepository {
                 .referrer("https://www.google.com")
                 .get()
 
-            val productElements = doc.select("div.sg-col-12-of-16.s-widget-spacing-small.sg-col.sg-col-16-of-20.sg-col-0-of-12.s-asin.s-result-item.sg-col-20-of-24 > .sg-col-inner")
+            val productElements =
+                doc.select("div.sg-col-12-of-16.s-widget-spacing-small.sg-col.sg-col-16-of-20.sg-col-0-of-12.s-asin.s-result-item.sg-col-20-of-24 > .sg-col-inner")
 
             for (i in 1..productElements.size) {
-                val title = productElements.select("span.a-size-medium.a-color-base.a-text-normal").eq(
-                    i
-                )
-                    .text()
-                val productLink = productElements.select("a.a-link-normal.s-underline-text.s-underline-link-text.s-link-style.a-text-normal")
+                val title =
+                    productElements.select("span.a-size-medium.a-color-base.a-text-normal").eq(
+                        i
+                    )
+                        .text()
+                val productLink =
+                    productElements.select("a.a-link-normal.s-underline-text.s-underline-link-text.s-link-style.a-text-normal")
                         .attr("href")
                 val price = productElements.select("span.a-price-whole").eq(i).text()
 
                 val productImageLink = productElements.select("img.s-image").eq(i).attr("src")
                 val ratingsElement = productElements.select("span.a-icon-alt").eq(i)
                     .text()
-                val productRating = ratingsElement.substringBefore(" out of").trim().toFloatOrNull() ?: 0f
+                val productRating =
+                    ratingsElement.substringBefore(" out of").trim().toFloatOrNull() ?: 0f
 
                 val totalReviews = productElements.select("span.a-size-base.s-underline-text").eq(i)
                     .text().toIntOrNull() ?: 0

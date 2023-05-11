@@ -1,4 +1,4 @@
-package com.kev.windowshopper.ui.theme
+package com.kev.windowshopper.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

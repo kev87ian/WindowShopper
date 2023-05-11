@@ -2,7 +2,7 @@ package com.kev.windowshopper
 
 import android.content.Context
 import androidx.room.Room
-import com.kev.windowshopper.db.WatchListDatabase
+import com.kev.windowshopper.domain.db.WatchListDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

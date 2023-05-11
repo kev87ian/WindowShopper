@@ -1,4 +1,4 @@
-package com.kev.windowshopper.ui.theme
+package com.kev.windowshopper.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

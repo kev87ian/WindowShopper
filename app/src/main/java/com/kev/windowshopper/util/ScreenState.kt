@@ -1,6 +1,6 @@
 package com.kev.windowshopper.util
 
-import com.kev.windowshopper.model.Product
+import com.kev.windowshopper.domain.model.Product
 
 sealed class ScreenState {
     object Loading : ScreenState()

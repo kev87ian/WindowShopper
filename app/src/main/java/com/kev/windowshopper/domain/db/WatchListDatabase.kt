@@ -1,8 +1,8 @@
-package com.kev.windowshopper.db
+package com.kev.windowshopper.domain.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.kev.windowshopper.model.Product
+import com.kev.windowshopper.domain.model.Product
 import java.nio.file.WatchEvent
 
 @Database(

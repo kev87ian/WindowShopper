@@ -1,4 +1,4 @@
-package com.kev.windowshopper.navigation
+package com.kev.windowshopper.presentation.navigation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

@@ -1,10 +1,9 @@
-package com.kev.windowshopper.screen.amazon
+package com.kev.windowshopper.presentation.screen.amazon
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kev.windowshopper.repository.AmazonRepository
+import com.kev.windowshopper.domain.model.Product
+import com.kev.windowshopper.domain.repository.AmazonRepository
 import com.kev.windowshopper.util.ScreenState
 import com.kev.windowshopper.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,24 +14,28 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class AmazonViewModel @Inject constructor(
-   private val repository: AmazonRepository
+    private val repository: AmazonRepository
 ) : ViewModel() {
 
-    private val _productsList = MutableStateFlow<ScreenState>(ScreenState.Loading)
-    val productList = _productsList
+    private val _productsStateFlow = MutableStateFlow<ScreenState>(ScreenState.Loading)
+    val productsStateFlow = _productsStateFlow
+
+    fun addProductToWatchList(product: Product) = viewModelScope.launch(Dispatchers.IO) {
+        repository.addProductToWatchList(product)
+    }
 
     fun searchProduct(query: String) = viewModelScope.launch(Dispatchers.IO) {
         when (val result = repository.searchProducts(query)) {
             is NetworkResult.Success -> {
-                _productsList.value = ScreenState.Success(result.data)
+                _productsStateFlow.value = ScreenState.Success(data = result.data)
             }
 
             is NetworkResult.Loading -> {
-                _productsList.value = ScreenState.Loading
+                _productsStateFlow.value = ScreenState.Loading
             }
 
             is NetworkResult.Error -> {
-                _productsList.value = ScreenState.Error(result.message)
+                _productsStateFlow.value = ScreenState.Error(errorMessage = result.message)
             }
         }
     }

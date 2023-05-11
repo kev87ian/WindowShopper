@@ -1,4 +1,4 @@
-package com.kev.windowshopper.ui.theme
+package com.kev.windowshopper.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

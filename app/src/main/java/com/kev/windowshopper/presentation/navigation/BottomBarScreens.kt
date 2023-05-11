@@ -1,4 +1,4 @@
-package com.kev.windowshopper.navigation
+package com.kev.windowshopper.presentation.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List

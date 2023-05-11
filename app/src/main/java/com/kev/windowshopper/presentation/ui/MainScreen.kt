@@ -1,4 +1,4 @@
-package com.kev.windowshopper.ui
+package com.kev.windowshopper.presentation.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -28,9 +28,9 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kev.windowshopper.navigation.BottomBarScreens
-import com.kev.windowshopper.navigation.BottomNavGraph
-import com.kev.windowshopper.screen.amazon.AmazonViewModel
+import com.kev.windowshopper.presentation.navigation.BottomBarScreens
+import com.kev.windowshopper.presentation.navigation.BottomNavGraph
+import com.kev.windowshopper.presentation.screen.amazon.AmazonViewModel
 import com.kev.windowshopper.util.ScreenState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

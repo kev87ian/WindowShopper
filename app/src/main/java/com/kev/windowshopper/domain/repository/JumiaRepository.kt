@@ -1,17 +1,26 @@
-package com.kev.windowshopper.repository
+package com.kev.windowshopper.domain.repository
 
-import com.kev.windowshopper.model.Product
+import com.kev.windowshopper.domain.db.WatchListDao
+import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.util.Constants
 import com.kev.windowshopper.util.NetworkResult
 import java.io.IOException
 import java.net.SocketTimeoutException
 import org.jsoup.Jsoup
+import javax.inject.Inject
 
-class JumiaRepository {
+class JumiaRepository @Inject constructor(
+    private val dao: WatchListDao
+){
 
-    private val productsList = mutableListOf<Product>()
+    suspend fun addProductToWatchList(product: Product) = dao.addProductToWatchList(product)
+
+
+
 
     suspend fun searchProduct(query: String): NetworkResult<List<Product>> {
+        val productsList = mutableListOf<Product>()
+
         return try {
             val url = Constants.JUMIA_BASE_URL.plus(query)
             val document = Jsoup.connect(url)

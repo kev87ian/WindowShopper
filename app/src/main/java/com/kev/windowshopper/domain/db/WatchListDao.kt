@@ -1,11 +1,11 @@
-package com.kev.windowshopper.db
+package com.kev.windowshopper.domain.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.kev.windowshopper.model.Product
+import com.kev.windowshopper.domain.model.Product
 
 interface WatchListDao {
     @Query("SELECT * FROM WATCHLIST")
