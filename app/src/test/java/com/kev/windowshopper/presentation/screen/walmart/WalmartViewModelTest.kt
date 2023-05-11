@@ -1,8 +1,8 @@
-package com.kev.windowshopper.presentation.screen.jumia
+package com.kev.windowshopper.presentation.screen.walmart
 
 import com.google.common.truth.Truth
 import com.kev.windowshopper.domain.model.Product
-import com.kev.windowshopper.domain.repository.JumiaRepository
+import com.kev.windowshopper.domain.repository.WalmartRepository
 import com.kev.windowshopper.util.NetworkResult
 import com.kev.windowshopper.util.ScreenState
 import io.mockk.coEvery
@@ -12,14 +12,17 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class JumiaViewModelTest {
-    private val repository: JumiaRepository = mockk()
-    private var jumiaViewModel: JumiaViewModel = mockk()
+class WalmartViewModelTest {
+
+    private val repository: WalmartRepository = mockk()
+    private var viewModel: WalmartViewModel = mockk()
 
     @Before
-    fun setup() {
-        jumiaViewModel = JumiaViewModel(repository)
+    fun setup(){
+        viewModel = WalmartViewModel(repository)
     }
+
+
 
     @Test
     fun searchProduct_error() = runBlocking {
@@ -27,14 +30,15 @@ class JumiaViewModelTest {
         val errorMessage = "No Internet Connection."
         val query = "query"
         coEvery { repository.searchProducts(query) } returns NetworkResult.Error(errorMessage)
-        // Act
-        jumiaViewModel.searchProduct(query)
+        //Act
+        viewModel.searchProduct(query)
         /*    delay to ensure stateflow has updated its value*/
         delay(300)
         // Assert
-        val actualState = jumiaViewModel.productsStateFlow.value
+        val actualState = viewModel.productsStateFlow.value
         val expectedState = ScreenState.Error(errorMessage)
-        Truth.assertThat(actualState).isEqualTo(expectedState)
+        Truth.assertThat(expectedState).isEqualTo(actualState)
+
     }
 
     @Test
@@ -47,18 +51,15 @@ class JumiaViewModelTest {
         mockProductsList.add(mockProduct)
         mockProductsList.add(mockProduct2)
         coEvery { repository.searchProducts(query) } returns NetworkResult.Success(mockProductsList)
-
         // Act
-        jumiaViewModel.searchProduct(query)
-
-/*         delay to allow the stateflow ot update its value*/
-
+        viewModel.searchProduct(query)
+        /*         delay to allow the stateflow ot update its value*/
         delay(300)
-
         // Assert
-        val actualState = jumiaViewModel.productsStateFlow.value
+        val actualState = viewModel.productsStateFlow.value
         val expectedState = ScreenState.Success(data = mockProductsList)
 
         Truth.assertThat(actualState).isEqualTo(expectedState)
     }
 }
+

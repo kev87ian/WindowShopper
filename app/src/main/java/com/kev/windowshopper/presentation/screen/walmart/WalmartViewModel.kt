@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.data.repository.WalmartRepositoryImpl
+import com.kev.windowshopper.domain.repository.WalmartRepository
 import com.kev.windowshopper.util.NetworkResult
 import com.kev.windowshopper.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WalmartViewModel @Inject constructor(
-    private val repository: WalmartRepositoryImpl
+    private val repository: WalmartRepository
 ): ViewModel() {
 
     private val _productsStateFlow = MutableStateFlow<ScreenState>(ScreenState.Loading)
