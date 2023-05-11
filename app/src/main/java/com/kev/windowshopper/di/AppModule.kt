@@ -2,8 +2,14 @@ package com.kev.windowshopper.di
 
 import android.content.Context
 import androidx.room.Room
-import com.kev.windowshopper.domain.db.WatchListDao
-import com.kev.windowshopper.domain.db.WatchListDatabase
+import com.kev.windowshopper.data.db.WatchListDao
+import com.kev.windowshopper.data.db.WatchListDatabase
+import com.kev.windowshopper.data.repository.AmazonRepositoryImpl
+import com.kev.windowshopper.data.repository.JumiaRepositoryImpl
+import com.kev.windowshopper.data.repository.WalmartRepositoryImpl
+import com.kev.windowshopper.domain.repository.AmazonRepository
+import com.kev.windowshopper.domain.repository.JumiaRepository
+import com.kev.windowshopper.domain.repository.WalmartRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +35,23 @@ object AppModule {
     @Provides
     fun providesWatchListDao(database: WatchListDatabase): WatchListDao {
         return database.watchListDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providesJumiaRepository(dao: WatchListDao): JumiaRepository {
+        return JumiaRepositoryImpl(dao)
+    }
+
+    @Singleton
+    @Provides
+    fun providesAmazonRepository(dao: WatchListDao): AmazonRepository {
+        return AmazonRepositoryImpl(dao)
+    }
+
+    @Singleton
+    @Provides
+    fun providesWalmartRepository(dao: WatchListDao): WalmartRepository {
+        return WalmartRepositoryImpl(dao)
     }
 }

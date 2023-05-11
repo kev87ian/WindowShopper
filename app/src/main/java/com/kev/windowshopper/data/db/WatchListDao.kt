@@ -1,4 +1,4 @@
-package com.kev.windowshopper.domain.db
+package com.kev.windowshopper.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Delete

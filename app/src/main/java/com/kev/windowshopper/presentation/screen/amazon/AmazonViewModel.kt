@@ -3,6 +3,7 @@ package com.kev.windowshopper.presentation.screen.amazon
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kev.windowshopper.domain.model.Product
+import com.kev.windowshopper.data.repository.AmazonRepositoryImpl
 import com.kev.windowshopper.domain.repository.AmazonRepository
 import com.kev.windowshopper.util.ScreenState
 import com.kev.windowshopper.util.NetworkResult
