@@ -21,7 +21,7 @@ class AmazonRepositoryImpl @Inject constructor(
         return try {
             val url = Constants.AMAZON_BASE_URL.plus(query)
             val doc = Jsoup.connect(url)
-                .userAgent("Mozilla")
+                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36")
                 .referrer("https://www.google.com")
                 .get()
 

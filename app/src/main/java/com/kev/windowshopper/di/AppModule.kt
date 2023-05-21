@@ -28,7 +28,7 @@ object AppModule {
             context,
             WatchListDatabase::class.java,
             "watchlist_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Singleton

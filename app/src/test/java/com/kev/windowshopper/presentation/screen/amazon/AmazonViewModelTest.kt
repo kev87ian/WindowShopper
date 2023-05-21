@@ -4,7 +4,7 @@ import com.google.common.truth.Truth
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.domain.repository.AmazonRepository
 import com.kev.windowshopper.util.NetworkResult
-import com.kev.windowshopper.util.ScreenState
+import com.kev.windowshopper.presentation.screen.common.ScreenState
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.delay

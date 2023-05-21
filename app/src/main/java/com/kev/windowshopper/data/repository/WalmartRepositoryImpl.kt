@@ -23,7 +23,7 @@ class WalmartRepositoryImpl @Inject constructor(
         return try {
             val url = Constants.WALMART_BASE_URL.plus(query)
             val document = Jsoup.connect(url)
-                .userAgent("Mozilla")
+                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36")
                 .get()
 
             val productElements = document.select("div.mb0.ph1.pa0-xl.bb.b--near-white.w-25")

@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.kev.windowshopper.presentation.screen.amazon.AmazonItemsScreen
+import com.kev.windowshopper.presentation.screen.jumia.JumiaItemsScreen
 
 @Composable
 fun BottomNavGraph(
@@ -12,11 +14,11 @@ fun BottomNavGraph(
 ) {
     NavHost(navController = navHostController, startDestination = BottomBarScreens.Jumia.route) {
         composable(route = BottomBarScreens.Jumia.route) {
-            Screen(text = "Jumia")
+            JumiaItemsScreen()
         }
 
         composable(route = BottomBarScreens.Amazon.route) {
-            Screen(text = "Amazon")
+            AmazonItemsScreen()
         }
 
         composable(route = BottomBarScreens.Walmart.route) {
