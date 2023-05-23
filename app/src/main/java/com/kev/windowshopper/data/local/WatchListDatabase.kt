@@ -2,10 +2,10 @@ package com.kev.windowshopper.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.kev.windowshopper.data.local.entity.ProductEntity
+import com.kev.windowshopper.domain.model.Product
 
 @Database(
-    entities = [ProductEntity::class],
+    entities = [Product::class],
     version = 1,
     exportSchema = false
 )

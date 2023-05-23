@@ -3,8 +3,8 @@ package com.kev.windowshopper.presentation.screen.jumia
 import com.google.common.truth.Truth
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.domain.repository.JumiaRepository
+import com.kev.windowshopper.presentation.common.ProductsState
 import com.kev.windowshopper.util.NetworkResult
-import com.kev.windowshopper.presentation.screen.common.ScreenState
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.delay
@@ -28,12 +28,12 @@ class JumiaViewModelTest {
         val query = "query"
         coEvery { repository.searchProducts(query) } returns NetworkResult.Error(errorMessage)
         // Act
-        jumiaViewModel.searchProduct(query)
+        jumiaViewModel.searchProducts(query)
         /*    delay to ensure stateflow has updated its value*/
         delay(300)
         // Assert
         val actualState = jumiaViewModel.productsStateFlow.value
-        val expectedState = ScreenState.Error(errorMessage)
+        val expectedState = ProductsState.Error(errorMessage)
         Truth.assertThat(actualState).isEqualTo(expectedState)
     }
 
@@ -49,7 +49,7 @@ class JumiaViewModelTest {
         coEvery { repository.searchProducts(query) } returns NetworkResult.Success(mockProductsList)
 
         // Act
-        jumiaViewModel.searchProduct(query)
+        jumiaViewModel.searchProducts(query)
 
 /*         delay to allow the stateflow ot update its value*/
 
@@ -57,7 +57,7 @@ class JumiaViewModelTest {
 
         // Assert
         val actualState = jumiaViewModel.productsStateFlow.value
-        val expectedState = ScreenState.Success(data = mockProductsList)
+        val expectedState = ProductsState.Success(data = mockProductsList)
 
         Truth.assertThat(actualState).isEqualTo(expectedState)
     }

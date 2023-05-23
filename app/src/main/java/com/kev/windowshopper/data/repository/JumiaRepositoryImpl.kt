@@ -1,13 +1,13 @@
 package com.kev.windowshopper.data.repository
 
 import com.kev.windowshopper.data.local.WatchListDao
-import com.kev.windowshopper.data.local.entity.ProductEntity
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.domain.repository.JumiaRepository
 import com.kev.windowshopper.util.Constants
 import com.kev.windowshopper.util.NetworkResult
 import java.io.IOException
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.jsoup.HttpStatusException
@@ -16,8 +16,9 @@ import org.jsoup.Jsoup
 class JumiaRepositoryImpl @Inject constructor(
     private val dao: WatchListDao
 ) : JumiaRepository {
-    override suspend fun addProductToWatchList(productEntity: ProductEntity) {
-        dao.addProductToWatchList(productEntity)
+
+    override suspend fun addProductToWatchList(product: Product) {
+        dao.addProductToWatchList(product)
     }
 
     override suspend fun searchProduct(query: String): Flow<NetworkResult<List<Product>>> {
@@ -26,6 +27,7 @@ class JumiaRepositoryImpl @Inject constructor(
 
         return flow {
             emit(NetworkResult.Loading())
+            delay(5000L)
             try {
                 val url = Constants.JUMIA_BASE_URL.plus(query)
                 val document = Jsoup.connect(url)

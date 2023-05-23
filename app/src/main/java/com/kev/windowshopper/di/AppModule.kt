@@ -10,6 +10,7 @@ import com.kev.windowshopper.data.repository.WalmartRepositoryImpl
 import com.kev.windowshopper.domain.repository.AmazonRepository
 import com.kev.windowshopper.domain.repository.JumiaRepository
 import com.kev.windowshopper.domain.repository.WalmartRepository
+import com.kev.windowshopper.domain.usecase.GetWatchListUseCase
 import com.kev.windowshopper.domain.usecase.SearchAmazonUseCase
 import com.kev.windowshopper.domain.usecase.SearchJumiaUseCase
 import com.kev.windowshopper.domain.usecase.SearchWalmartUseCase
@@ -74,5 +75,11 @@ object AppModule {
     @Provides
     fun providesWalmartUseCase(repository: WalmartRepository): SearchWalmartUseCase{
         return SearchWalmartUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun getWatchListUseCase(dao: WatchListDao): GetWatchListUseCase{
+        return GetWatchListUseCase(dao)
     }
 }

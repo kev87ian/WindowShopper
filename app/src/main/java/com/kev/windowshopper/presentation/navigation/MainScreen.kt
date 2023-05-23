@@ -15,8 +15,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,29 +22,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kev.windowshopper.presentation.screen.amazon.AmazonViewModel
 import com.kev.windowshopper.presentation.screen.jumia.JumiaViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-    val amazonViewModel: AmazonViewModel = hiltViewModel()
-
     val jumiaViewModel: JumiaViewModel = hiltViewModel()
 
     val navController = rememberNavController()
 
-    var query by remember{
+    var query by remember {
         mutableStateOf("")
     }
-    jumiaViewModel.updateSearchQuery(query)
+    jumiaViewModel.searchProducts(query)
+
     Scaffold(
         bottomBar = {
             BottomBar(navController = navController)

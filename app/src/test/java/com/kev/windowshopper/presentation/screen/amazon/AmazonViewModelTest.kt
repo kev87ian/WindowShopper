@@ -4,7 +4,7 @@ import com.google.common.truth.Truth
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.domain.repository.AmazonRepository
 import com.kev.windowshopper.util.NetworkResult
-import com.kev.windowshopper.presentation.screen.common.ScreenState
+import com.kev.windowshopper.presentation.common.ProductsState
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.delay
@@ -33,7 +33,7 @@ class AmazonViewModelTest {
         delay(300)
         // Assert
         val actualState = amazonViewModel.productsStateFlow.value
-        val expectedState = ScreenState.Error("No Internet Connection.")
+        val expectedState = ProductsState.Error("No Internet Connection.")
         Truth.assertThat(actualState).isEqualTo(expectedState)
     }
 
@@ -53,7 +53,7 @@ class AmazonViewModelTest {
 
         // Assert
         val actualState = amazonViewModel.productsStateFlow.value
-        val expectedState = ScreenState.Success(mockProductsList)
+        val expectedState = ProductsState.Success(mockProductsList)
         Truth.assertThat(actualState).isEqualTo(expectedState)
     }
 }

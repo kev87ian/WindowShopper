@@ -1,65 +1,67 @@
 package com.kev.windowshopper.presentation.screen.jumia
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kev.windowshopper.domain.model.Product
-import com.kev.windowshopper.domain.repository.JumiaRepository
-import com.kev.windowshopper.presentation.screen.common.ScreenState
+import com.kev.windowshopper.domain.usecase.SearchJumiaUseCase
 import com.kev.windowshopper.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class JumiaViewModel @Inject constructor(
-
-    private val repository: JumiaRepository
-
+    private val useCase: SearchJumiaUseCase
 ) : ViewModel() {
 
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery
+    private val _state = MutableStateFlow(ProductsState())
+    val state = _state
 
-    fun updateSearchQuery(query: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            delay(5000L)
-            _searchQuery.value = query
+    fun searchProducts(query: String) = viewModelScope.launch(Dispatchers.IO) {
+        _state.update {
+            it.copy(
+                isLoading = true
+            )
+        }
+        useCase.searchJumia(query).collect { result ->
 
-            repository.searchProducts(_searchQuery.value).collect { result ->
-
-                _state.value = _state.value.copy(isLoading = true)
-
-                when (result) {
-                    is NetworkResult.Loading -> {
-                        _state.value = ScreenState(isLoading = true)
+            when (result) {
+                is NetworkResult.Loading -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = true
+                        )
                     }
-
-                    is NetworkResult.Error -> {
-                        _state.value = ScreenState(errorMessage = result.message, isLoading = false)
-                    }
-
-                    is NetworkResult.Success -> {
-                        _state.value = ScreenState(
+                }
+                is NetworkResult.Success -> {
+                    _state.update {
+                        it.copy(
                             products = result.data,
                             isLoading = false
+                        )
+                    }
+                }
+                is NetworkResult.Error -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = result.message,
+                            products = emptyList()
                         )
                     }
                 }
             }
         }
     }
-
-    private val _state = mutableStateOf(ScreenState())
-    val state = _state
-
-    fun searchProduct(query: String) = viewModelScope.launch(Dispatchers.IO) {
-    }
-    fun addProductToWatchList(product: Product) = viewModelScope.launch(Dispatchers.IO) {
-        repository.addProductToWatchList(product)
-    }
+    data class ProductsState(
+        val products: List<Product> = emptyList(),
+        val isLoading: Boolean = false,
+        val errorMessage: String = ""
+    )
+    /*    private val _state = mutableStateOf(ProductsState())
+        val state: State<ProductsState> = _state*/
 }

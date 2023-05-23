@@ -4,7 +4,7 @@ import com.google.common.truth.Truth
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.domain.repository.WalmartRepository
 import com.kev.windowshopper.util.NetworkResult
-import com.kev.windowshopper.presentation.screen.common.ScreenState
+import com.kev.windowshopper.presentation.common.ProductsState
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.delay
@@ -36,7 +36,7 @@ class WalmartViewModelTest {
         delay(300)
         // Assert
         val actualState = viewModel.productsStateFlow.value
-        val expectedState = ScreenState.Error(errorMessage)
+        val expectedState = ProductsState.Error(errorMessage)
         Truth.assertThat(expectedState).isEqualTo(actualState)
 
     }
@@ -57,7 +57,7 @@ class WalmartViewModelTest {
         delay(300)
         // Assert
         val actualState = viewModel.productsStateFlow.value
-        val expectedState = ScreenState.Success(data = mockProductsList)
+        val expectedState = ProductsState.Success(data = mockProductsList)
 
         Truth.assertThat(actualState).isEqualTo(expectedState)
     }

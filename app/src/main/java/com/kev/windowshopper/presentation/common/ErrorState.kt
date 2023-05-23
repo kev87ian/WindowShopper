@@ -1,4 +1,4 @@
-package com.kev.windowshopper.presentation.screen.common
+package com.kev.windowshopper.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
