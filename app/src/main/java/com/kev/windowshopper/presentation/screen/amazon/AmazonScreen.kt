@@ -1,12 +1,11 @@
 package com.kev.windowshopper.presentation.screen.amazon
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun AmazonItemsScreen() {
-    val viewModel: AmazonViewModel = hiltViewModel()
-
+fun AmazonItemsScreen(
+    viewModel: AmazonViewModel
+) {
     // val state = viewModel.state
 
 //    if (state.value.isLoading) {

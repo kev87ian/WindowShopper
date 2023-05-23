@@ -2,9 +2,7 @@ package com.kev.windowshopper.presentation.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -12,27 +10,31 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.kev.windowshopper.presentation.screen.amazon.AmazonItemsScreen
+import com.kev.windowshopper.presentation.screen.amazon.AmazonViewModel
 import com.kev.windowshopper.presentation.screen.jumia.JumiaItemsScreen
 import com.kev.windowshopper.presentation.screen.jumia.JumiaViewModel
+import com.kev.windowshopper.presentation.screen.walmart.WalmartScreen
+import com.kev.windowshopper.presentation.screen.walmart.WalmartViewModel
 
 @Composable
 fun BottomNavGraph(
     navHostController: NavHostController
 ) {
     val jumiaViewModel = hiltViewModel<JumiaViewModel>()
-    val state by jumiaViewModel.state.collectAsState()
+    val amazonViewModel = hiltViewModel<AmazonViewModel>()
+    val walmartViewModel = hiltViewModel<WalmartViewModel>()
 
     NavHost(navController = navHostController, startDestination = BottomBarScreens.Jumia.route) {
         composable(route = BottomBarScreens.Jumia.route) {
-            JumiaItemsScreen(state)
+            JumiaItemsScreen(jumiaViewModel)
         }
 
         composable(route = BottomBarScreens.Amazon.route) {
-            AmazonItemsScreen()
+            AmazonItemsScreen(viewModel = amazonViewModel)
         }
 
         composable(route = BottomBarScreens.Walmart.route) {
-            Screen(text = "Walmart")
+            WalmartScreen(viewModel = walmartViewModel)
         }
     }
 }
@@ -58,9 +60,4 @@ sealed class BottomBarScreens(
         route = "walmart",
         icon = Icons.Default.List
     )
-}
-
-@Composable
-fun Screen(text: String) {
-    Text(text = text)
 }

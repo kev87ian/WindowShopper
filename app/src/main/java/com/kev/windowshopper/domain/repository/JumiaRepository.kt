@@ -5,8 +5,6 @@ import com.kev.windowshopper.util.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface JumiaRepository {
-/*    suspend fun addProductToWatchList(product: Product)
-    suspend fun searchProducts(query: String): Flow<NetworkResult<List<Product>>>*/
 
     suspend fun addProductToWatchList(product: Product)
     suspend fun searchProduct(query: String): Flow<NetworkResult<List<Product>>>

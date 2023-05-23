@@ -1,16 +1,19 @@
 package com.kev.windowshopper.presentation.screen.jumia
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.domain.usecase.SearchJumiaUseCase
+import com.kev.windowshopper.presentation.common.ProductsState
 import com.kev.windowshopper.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -18,50 +21,41 @@ class JumiaViewModel @Inject constructor(
     private val useCase: SearchJumiaUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ProductsState())
-    val state = _state
+    private val _state = mutableStateOf(ProductsState())
+    val state: State<ProductsState> = _state
 
-    fun searchProducts(query: String) = viewModelScope.launch(Dispatchers.IO) {
-        _state.update {
-            it.copy(
-                isLoading = true
-            )
-        }
-        useCase.searchJumia(query).collect { result ->
+    /*The job allows us to delay the search if the query changes, and updates the results with results from the new query*/
+    private var job: Job? = null
 
-            when (result) {
-                is NetworkResult.Loading -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = true
+    fun searchProducts(query: String) {
+        job?.cancel()
+        job = viewModelScope.launch(Dispatchers.IO) {
+            delay(750L)
+            useCase.searchJumia(query).onEach { result ->
+                when (result) {
+                    is NetworkResult.Success -> {
+                        _state.value = state.value.copy(
+                            isLoading = false,
+                            errorMessage = "",
+                            products = emptyList()
                         )
                     }
-                }
-                is NetworkResult.Success -> {
-                    _state.update {
-                        it.copy(
-                            products = result.data,
-                            isLoading = false
-                        )
-                    }
-                }
-                is NetworkResult.Error -> {
-                    _state.update {
-                        it.copy(
+                    is NetworkResult.Error -> {
+                        _state.value = state.value.copy(
                             isLoading = false,
                             errorMessage = result.message,
                             products = emptyList()
                         )
                     }
+                    is NetworkResult.Loading -> {
+                        _state.value = state.value.copy(
+                            isLoading = true,
+                            errorMessage = "",
+                            products = emptyList()
+                        )
+                    }
                 }
-            }
+            }.launchIn(viewModelScope)
         }
     }
-    data class ProductsState(
-        val products: List<Product> = emptyList(),
-        val isLoading: Boolean = false,
-        val errorMessage: String = ""
-    )
-    /*    private val _state = mutableStateOf(ProductsState())
-        val state: State<ProductsState> = _state*/
 }

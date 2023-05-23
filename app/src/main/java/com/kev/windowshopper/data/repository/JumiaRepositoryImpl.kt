@@ -27,7 +27,7 @@ class JumiaRepositoryImpl @Inject constructor(
 
         return flow {
             emit(NetworkResult.Loading())
-            delay(5000L)
+            delay(500L)
             try {
                 val url = Constants.JUMIA_BASE_URL.plus(query)
                 val document = Jsoup.connect(url)
@@ -80,7 +80,7 @@ class JumiaRepositoryImpl @Inject constructor(
                 emit(NetworkResult.Error("Ensure you have an active internet connection"))
             } catch (e: HttpStatusException) {
                 e.printStackTrace()
-                emit(NetworkResult.Error(e.localizedMessage ?: "An error occured"))
+                emit(NetworkResult.Error(e.localizedMessage ?: "An error occured(Jsoup) "))
             } catch (e: Exception) {
                 e.printStackTrace()
                 emit(NetworkResult.Error(e.localizedMessage ?: "An error occured"))

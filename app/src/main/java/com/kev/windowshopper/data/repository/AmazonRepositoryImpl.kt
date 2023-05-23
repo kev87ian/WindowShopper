@@ -21,7 +21,6 @@ class AmazonRepositoryImpl @Inject constructor(
 
     override suspend fun searchProduct(query: String): Flow<NetworkResult<List<Product>>> {
         /* Create a mutable list that we'll populate and submit*/
-
         val productsList = mutableListOf<Product>()
         return flow {
             emit(NetworkResult.Loading())
