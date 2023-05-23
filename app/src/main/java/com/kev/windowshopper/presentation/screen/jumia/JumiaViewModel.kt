@@ -1,10 +1,7 @@
 package com.kev.windowshopper.presentation.screen.jumia
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.domain.repository.JumiaRepository
@@ -25,14 +22,13 @@ class JumiaViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
 
     fun updateSearchQuery(query: String) {
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             delay(5000L)
-        _searchQuery.value = query
+            _searchQuery.value = query
 
             repository.searchProducts(_searchQuery.value).collect { result ->
 
@@ -41,12 +37,10 @@ class JumiaViewModel @Inject constructor(
                 when (result) {
                     is NetworkResult.Loading -> {
                         _state.value = ScreenState(isLoading = true)
-
                     }
 
                     is NetworkResult.Error -> {
                         _state.value = ScreenState(errorMessage = result.message, isLoading = false)
-
                     }
 
                     is NetworkResult.Success -> {
@@ -54,23 +48,18 @@ class JumiaViewModel @Inject constructor(
                             products = result.data,
                             isLoading = false
                         )
-
                     }
                 }
             }
         }
     }
 
-
-
     private val _state = mutableStateOf(ScreenState())
     val state = _state
 
     fun searchProduct(query: String) = viewModelScope.launch(Dispatchers.IO) {
-
     }
     fun addProductToWatchList(product: Product) = viewModelScope.launch(Dispatchers.IO) {
         repository.addProductToWatchList(product)
     }
-
 }

@@ -1,6 +1,6 @@
 package com.kev.windowshopper.data.repository
 
-import com.kev.windowshopper.data.db.WatchListDao
+import com.kev.windowshopper.data.local.WatchListDao
 import com.kev.windowshopper.domain.model.Product
 import com.kev.windowshopper.domain.repository.AmazonRepository
 import com.kev.windowshopper.util.Constants

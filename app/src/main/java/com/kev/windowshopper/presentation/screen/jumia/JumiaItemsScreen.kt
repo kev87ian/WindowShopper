@@ -3,11 +3,10 @@ package com.kev.windowshopper.presentation.screen.jumia
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kev.windowshopper.presentation.screen.common.ErrorState
 import com.kev.windowshopper.presentation.screen.common.LoadingState
-import com.kev.windowshopper.presentation.screen.common.ProductItemComposable
+import com.kev.windowshopper.presentation.common.ProductItemComposable
 
 @Composable
 fun JumiaItemsScreen() {

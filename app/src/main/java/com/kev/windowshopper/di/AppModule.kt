@@ -2,14 +2,17 @@ package com.kev.windowshopper.di
 
 import android.content.Context
 import androidx.room.Room
-import com.kev.windowshopper.data.db.WatchListDao
-import com.kev.windowshopper.data.db.WatchListDatabase
+import com.kev.windowshopper.data.local.WatchListDao
+import com.kev.windowshopper.data.local.WatchListDatabase
 import com.kev.windowshopper.data.repository.AmazonRepositoryImpl
 import com.kev.windowshopper.data.repository.JumiaRepositoryImpl
 import com.kev.windowshopper.data.repository.WalmartRepositoryImpl
 import com.kev.windowshopper.domain.repository.AmazonRepository
 import com.kev.windowshopper.domain.repository.JumiaRepository
 import com.kev.windowshopper.domain.repository.WalmartRepository
+import com.kev.windowshopper.domain.usecase.SearchAmazonUseCase
+import com.kev.windowshopper.domain.usecase.SearchJumiaUseCase
+import com.kev.windowshopper.domain.usecase.SearchWalmartUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,5 +56,23 @@ object AppModule {
     @Provides
     fun providesWalmartRepository(dao: WatchListDao): WalmartRepository {
         return WalmartRepositoryImpl(dao)
+    }
+
+    @Singleton
+    @Provides
+    fun providesJumiaUseCase(repository: JumiaRepository): SearchJumiaUseCase{
+        return SearchJumiaUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun providesAmazonUseCase(repository: AmazonRepository): SearchAmazonUseCase{
+        return SearchAmazonUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun providesWalmartUseCase(repository: WalmartRepository): SearchWalmartUseCase{
+        return SearchWalmartUseCase(repository)
     }
 }

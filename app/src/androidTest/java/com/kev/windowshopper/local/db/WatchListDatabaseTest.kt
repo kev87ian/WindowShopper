@@ -7,8 +7,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth
-import com.kev.windowshopper.data.db.WatchListDao
-import com.kev.windowshopper.data.db.WatchListDatabase
+import com.kev.windowshopper.data.local.WatchListDao
+import com.kev.windowshopper.data.local.WatchListDatabase
 import com.kev.windowshopper.getOrAwaitValue
 import com.kev.windowshopper.domain.model.Product
 import kotlinx.coroutines.ExperimentalCoroutinesApi
