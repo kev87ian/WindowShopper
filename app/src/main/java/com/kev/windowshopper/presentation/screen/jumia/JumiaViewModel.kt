@@ -9,7 +9,6 @@ import com.kev.windowshopper.presentation.common.ProductsState
 import com.kev.windowshopper.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -29,15 +28,15 @@ class JumiaViewModel @Inject constructor(
 
     fun searchProducts(query: String) {
         job?.cancel()
-        job = viewModelScope.launch(Dispatchers.IO) {
-            delay(750L)
+        job = viewModelScope.launch {
+            delay(50L)
             useCase.searchJumia(query).onEach { result ->
                 when (result) {
                     is NetworkResult.Success -> {
                         _state.value = state.value.copy(
                             isLoading = false,
                             errorMessage = "",
-                            products = emptyList()
+                            products = result.data
                         )
                     }
                     is NetworkResult.Error -> {
@@ -53,6 +52,7 @@ class JumiaViewModel @Inject constructor(
                             errorMessage = "",
                             products = emptyList()
                         )
+                        println(result)
                     }
                 }
             }.launchIn(viewModelScope)

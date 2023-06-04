@@ -7,8 +7,10 @@ import com.kev.windowshopper.util.Constants
 import com.kev.windowshopper.util.NetworkResult
 import java.io.IOException
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 
@@ -27,13 +29,14 @@ class AmazonRepositoryImpl @Inject constructor(
 
             try {
                 val url = Constants.AMAZON_BASE_URL.plus(query)
-                val doc = Jsoup.connect(url)
-                    .userAgent(
-                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36"
-                    )
-                    .referrer("https://www.google.com")
-                    .get()
-
+                val doc = withContext(Dispatchers.IO) {
+                    Jsoup.connect(url)
+                        .userAgent(
+                            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36"
+                        )
+                        .referrer("https://www.google.com")
+                        .get()
+                }
 /*                 Select elements/classes that contain results found*/
                 val productElements =
                     doc.select(

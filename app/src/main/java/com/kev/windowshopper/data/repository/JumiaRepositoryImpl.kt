@@ -7,9 +7,10 @@ import com.kev.windowshopper.util.Constants
 import com.kev.windowshopper.util.NetworkResult
 import java.io.IOException
 import javax.inject.Inject
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 
@@ -27,15 +28,16 @@ class JumiaRepositoryImpl @Inject constructor(
 
         return flow {
             emit(NetworkResult.Loading())
-            delay(500L)
             try {
                 val url = Constants.JUMIA_BASE_URL.plus(query)
-                val document = Jsoup.connect(url)
-                    .userAgent(
-                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36" // ktlint-disable max-line-length
-                    )
-                    .referrer("https://www.google.com")
-                    .get()
+                val document = withContext(Dispatchers.IO) {
+                    Jsoup.connect(url)
+                        .userAgent(
+                            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36" // ktlint-disable max-line-length
+                        )
+                        .referrer("https://www.google.com")
+                        .get()
+                }
                 val productElements = document.select("article.prd._fb.col.c-prd")
                 for (i in 0 until productElements.size) {
                     val title = productElements.select(".name").eq(i)
