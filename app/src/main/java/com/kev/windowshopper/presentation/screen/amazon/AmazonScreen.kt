@@ -23,7 +23,7 @@ fun AmazonItemsScreen(
         ErrorState(errorMessage = state.errorMessage)
     }
     if (state.products.isNotEmpty()) {
-        LazyColumn(modifier = Modifier.padding(8.dp)) {
+        LazyColumn(modifier = Modifier.padding(bottom = 72.dp)) {
             items(state.products) {
                 ProductItemComposable(product = it)
             }
