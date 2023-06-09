@@ -32,49 +32,60 @@ class JumiaRepositoryImpl @Inject constructor(
                 val url = Constants.JUMIA_BASE_URL.plus(query)
                 val document = withContext(Dispatchers.IO) {
                     Jsoup.connect(url)
-                        .userAgent(
-                            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.38 Safari/537.36" // ktlint-disable max-line-length
-                        )
+                        .userAgent("Mozilla")
+                        .timeout(10000)
                         .referrer("https://www.google.com")
                         .get()
                 }
+
                 val productElements = document.select("article.prd._fb.col.c-prd")
                 for (i in 0 until productElements.size) {
-                    val title = productElements.select(".name").eq(i)
+                    val productName = productElements.select(".name").eq(i)
                         .text()
 
-                    val price = productElements.select(".prc")
+                    val productLink = productElements.select(".prc")
                         .eq(i)
                         .text()
                     val reviewsCountElement = productElements.select("div.rev")
                         .eq(i)
                         .text()
 
-                    val imageUrl = productElements.select("div.img-c")
+                    val productPrice = productElements.select("div.img-c")
                         .select("img.img")
                         .eq(i)
                         .attr("data-src")
 
-                    val productLink = productElements.select(".core")
+                    val productImageLink = productElements.select(".core")
                         .attr("href")
                     // extracts rating value
-                    val productRating =
-                        reviewsCountElement.substringBefore(" out of").toFloatOrNull() ?: 0f
+                    val productRating = reviewsCountElement.substringBefore(" out of").toFloatOrNull() ?: 0f
                     // Extract ratings count
-                    val totalReviews =
-                        reviewsCountElement.substringAfter("(").substringBefore(")").trim()
-                            .toIntOrNull() ?: 0
+                    val totalReviews = reviewsCountElement.substringAfter("(").substringBefore(")").trim().toIntOrNull() ?: 0
 
                     val product = Product(
-                        title,
-                        price,
-                        imageUrl,
+                        productName,
+                        productPrice,
+                        productImageLink,
                         productLink,
                         productRating,
                         totalReviews
                     )
 
-                    productsList.add(product)
+                    if (productImageLink.isNotEmpty()) {
+                        productsList.add(product)
+                    } else {
+                        Unit
+                    }
+
+                    for (parsedProduct in productsList) {
+                        println("Title: ${parsedProduct.productName}")
+                        println("Product Link: ${parsedProduct.productPrice}")
+                        println("Image Url: ${parsedProduct.productLink}")
+                        println("Price: ${parsedProduct.productImageLink}")
+                        println("Rating: ${parsedProduct.productRating}")
+                        println("Reviews Count: ${parsedProduct.totalReviews}")
+                        println("\n")
+                    }
                 }
                 emit(NetworkResult.Success(productsList))
             } catch (e: IOException) {
