@@ -47,6 +47,7 @@ fun ProductItemComposable(
         modifier = Modifier
             .height(300.dp)
             .background(MaterialTheme.colorScheme.background)
+            .padding(8.dp)
     ) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
@@ -74,8 +75,8 @@ fun ProductItemComposable(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                maxLines = 4,
+                overflow = TextOverflow.Visible
             )
 
             Spacer(modifier = Modifier.height(8.dp))

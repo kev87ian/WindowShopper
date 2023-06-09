@@ -75,7 +75,9 @@ class AmazonRepositoryImpl @Inject constructor(
                         totalReviews = totalReviews
                     )
 
-                    productsList.add(product)
+                    if (product.productImageLink.isNotEmpty() || product.productName.isNotEmpty()) {
+                        productsList.add(product)
+                    } else { Unit }
                 }
                 emit(NetworkResult.Success(productsList))
             } catch (e: Exception) {
