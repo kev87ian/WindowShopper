@@ -53,7 +53,7 @@ fun ProductItemComposable(
                 AsyncImage(
                     model = ImageRequest.Builder(context)
                         .crossfade(true)
-                        .data(product.productImageLink)
+                        .data(product.productImageLink.toString())
                         .build(),
                     contentDescription = "Product's Image"
                 )
@@ -96,11 +96,14 @@ fun ProductItemComposable(
                     Text(text = " | ".plus(product.totalReviews))
                 }
 
-                Text(
-                    text = product.productPrice,
-                    fontWeight = FontWeight.Black,
-                    modifier = Modifier.padding(end = 8.dp)
-                )
+                Row {
+                    Text(
+                        text = product.productPrice,
+                        fontWeight = FontWeight.Black,
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+//
+                }
             }
         }
     }

@@ -12,30 +12,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kev.windowshopper.presentation.screen.jumia.JumiaViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-    val jumiaViewModel: JumiaViewModel = hiltViewModel()
-
     val navController = rememberNavController()
-
-    var query by remember {
-        mutableStateOf("")
-    }
-    jumiaViewModel.searchProducts(query)
 
     Scaffold(
         bottomBar = {
@@ -53,8 +42,8 @@ fun MainScreen() {
 @Composable
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
-        BottomBarScreens.Jumia,
         BottomBarScreens.Amazon,
+        BottomBarScreens.Jumia,
         BottomBarScreens.Walmart
     )
 

@@ -31,27 +31,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             WindowShopperTheme {
-                /*       OutlinedTextField(
-                modifier = Modifier.fillMaxWidth().padding(12.dp),
-                value = query,
-                onValueChange = {
-                    query = it
-                },
-                placeholder = {
-                    Text(text = "Search...")
-                },
-                singleLine = true,
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
-                }
-            )*/
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
